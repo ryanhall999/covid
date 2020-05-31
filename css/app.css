@@ -1,0 +1,47 @@
+#main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: space-evenly;
+}
+
+#statesList {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+}
+
+#state {
+	border: 1px solid black;
+	border-radius: 7px;
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
+
+#topCard {
+	border: 1px solid black;
+	border-radius: 7px;
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
+
+canvas {
+	width: 1600px !important;
+	height: 400px !important;
+}
+
+path {
+	pointer-events: all;
+}
+
+path:hover {
+	opacity: 0.5;
+	cursor: pointer;
+}
+
+body {
+	background-color: black;
+	color: white;
+}
