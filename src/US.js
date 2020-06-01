@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Card, ListGroup, Button, Modal } from "react-bootstrap";
 
-export default function MakeUS({ us }) {
+export default function MakeUS({ us, global }) {
+	console.log(global);
 	return (
-		<Card style={{ width: "20rem", margin: ".5rem" }}>
-			<Card.Header style={{ fontWeight: "bold", fontSize: "2rem" }}>
+		<Card style={{ width: "25rem", margin: ".5rem" }}>
+			<Card.Header
+				style={{
+					fontWeight: "bold",
+					fontSize: "2rem",
+					alignSelf: "center",
+				}}
+			>
 				US
 			</Card.Header>
 			<ListGroup variant="flush">
@@ -21,6 +28,10 @@ export default function MakeUS({ us }) {
 				<ListGroup.Item>
 					US Recovered per Confirmed:
 					{((us.TotalRecovered / us.TotalConfirmed) * 100).toFixed(2)}%
+				</ListGroup.Item>
+				<ListGroup.Item>
+					US Cases of Worldwide Total:
+					{((us.TotalConfirmed / global) * 100).toFixed(2)}%
 				</ListGroup.Item>
 			</ListGroup>
 		</Card>

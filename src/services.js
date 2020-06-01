@@ -69,7 +69,6 @@ function createStateLabels(states) {
 	for (let i = 0; i < states.length; i++) {
 		newArr.push(states[i].state);
 	}
-	console.log(newArr);
 	return newArr;
 }
 
@@ -78,7 +77,6 @@ function createStateCases(states) {
 	for (let i = 0; i < states.length; i++) {
 		newArr.push(states[i].positive);
 	}
-	console.log(newArr);
 	return newArr;
 }
 

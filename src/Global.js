@@ -3,8 +3,10 @@ import { Card, ListGroup, Button, Modal } from "react-bootstrap";
 
 export default function MakeGlobal({ global }) {
 	return (
-		<Card style={{ width: "20rem", margin: ".5rem" }}>
-			<Card.Header style={{ fontWeight: "bold", fontSize: "2rem" }}>
+		<Card style={{ width: "25rem", margin: ".5rem" }}>
+			<Card.Header
+				style={{ fontWeight: "bold", fontSize: "2rem", alignSelf: "center" }}
+			>
 				Global
 			</Card.Header>
 			<ListGroup variant="flush">

@@ -49,6 +49,10 @@ export default function Graphs({ states }) {
 			</div>
 		);
 	} else {
-		return <div></div>;
+		return (
+			<div>
+				<h1>Please Refresh</h1>
+			</div>
+		);
 	}
 }

@@ -34,6 +34,9 @@ function App() {
 				});
 			}
 		});
+		await axios.get("https://covidtracking.com/api/states").then((response) => {
+			setStates(response.data);
+		});
 		// await axios
 		// 	.get("https://covidtracking.com/api/states/daily")ß
 		// 	.then((response) => {
@@ -41,18 +44,7 @@ function App() {
 		// 		setDays(response.data);
 		// 	});
 		//
-		await axios.get("https://covidtracking.com/api/states").then((response) => {
-			setStates(response.data);
-		});
-		// await axios.post("/api/global", global).then((response) => {
-		// 	console.log(response);
-		// });
-		// await axios.post("/api/us", us).then((response) => {
-		// 	console.log(response);
-		// });
 	};
-
-	console.log(us);
 
 	const mapHandler = (e) => {
 		if (states[0] !== undefined) {
@@ -75,8 +67,6 @@ function App() {
 			alert(e.target.dataset.name);
 		}
 	};
-
-	console.log(states);
 
 	return (
 		<div>
@@ -103,7 +93,7 @@ function App() {
 						<Route path="/">
 							<div id="main">
 								<Global global={global} />
-								<US us={us} />
+								<US us={us} global={global.TotalConfirmed} />
 								<USAMap onClick={mapHandler} />
 							</div>
 						</Route>
