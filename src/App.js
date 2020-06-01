@@ -4,11 +4,11 @@ import axios from "axios";
 import MakeStates from "./MakeStates";
 import "./App.css";
 import USAMap from "react-usa-map";
-import { Card, ListGroup, Button, Nav, Navbar } from "react-bootstrap";
-import { getStateInfo } from "./services";
 import Global from "./Global";
 import US from "./US";
 import Graphs from "./Graphs";
+import { Card, ListGroup, Button, Nav, Navbar } from "react-bootstrap";
+import { getStateInfo, getStatePop } from "./services";
 
 function App() {
 	const [global, setGlobal] = useState({});
@@ -39,11 +39,15 @@ function App() {
 	};
 
 	const mapHandler = (e) => {
-		console.log(e.target.dataset.name);
 		if (states[0] !== undefined) {
 			let state = getStateInfo(e.target.dataset.name, states);
+			let statePop = getStatePop(state.state);
 			alert(`${state.state}
 			Total Confirmed: ${state.positive}
+			Total Confirmed of State Population:	${(
+				(state.positive / statePop) *
+				100
+			).toFixed(2)}%
 			Total Deaths: ${state.death}
 			Total Recovered: ${state.recovered}
 			Death per Confirmed: ${((state.death / state.positive) * 100).toFixed(2)}%
@@ -74,6 +78,19 @@ function App() {
 							Refresh
 						</Button>
 					</Navbar>
+					<Switch>
+						<Route path="#home">
+							<div id="main">
+								<Global global={global} />
+								<US us={us} />
+								<USAMap onClick={mapHandler} />
+							</div>
+						</Route>
+						<Route path="#lists">
+							<MakeStates states={states} />
+						</Route>
+						<Route path="#graphs"></Route>
+					</Switch>
 				</Router>
 			</div>
 			<div>
