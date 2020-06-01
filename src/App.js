@@ -21,11 +21,17 @@ function App() {
 		e.preventDefault();
 		await axios.get("https://api.covid19api.com/summary").then((response) => {
 			console.log(response);
-			if (response.status === "429") {
+			if (response.status == "429") {
 				alert("Too Many Requests, Please Try Again");
 			} else {
 				setGlobal(response.data.Global);
 				setUs(response.data.Countries[177]);
+				axios.post("/api/global", response.data.Global).then((response) => {
+					console.log(response);
+				});
+				axios.post("/api/us", response.data.Countries[177]).then((response) => {
+					console.log(response);
+				});
 			}
 		});
 		// await axios
@@ -38,10 +44,15 @@ function App() {
 		await axios.get("https://covidtracking.com/api/states").then((response) => {
 			setStates(response.data);
 		});
-		await axios.post("/api/global", global).then((response) => {
-			console.log(response);
-		});
+		// await axios.post("/api/global", global).then((response) => {
+		// 	console.log(response);
+		// });
+		// await axios.post("/api/us", us).then((response) => {
+		// 	console.log(response);
+		// });
 	};
+
+	console.log(us);
 
 	const mapHandler = (e) => {
 		if (states[0] !== undefined) {
@@ -73,9 +84,9 @@ function App() {
 				<div>
 					<nav>
 						<div id="navbar">
-							<span>Ryan's Covid Tracker</span>
+							<span id="pageLabel">Ryan's Covid Tracker</span>
 							<Link to="/">Home</Link>
-							<Link to="/list">List</Link>
+							<Link to="/list">States</Link>
 							<Link to="/graphs">Graphs</Link>
 							<Button variant="primary" onClick={handleClick}>
 								Refresh
@@ -99,26 +110,8 @@ function App() {
 					</Switch>
 				</div>
 			</Router>
-			;
 		</div>
 	);
 }
 
 export default App;
-
-// <div>
-// 	<Router>
-// 		<Navbar bg="dark" variant="dark">
-// 			<Navbar.Brand href="#home">Ryan's Covid Tracker</Navbar.Brand>
-// 			<Nav className="mr-auto">
-// 				<Nav.Link href="#home">Home</Nav.Link>
-// 				<Nav.Link href="#lists">Lists</Nav.Link>
-// 				<Nav.Link href="#graphs">Graphs</Nav.Link>
-// 			</Nav>
-// 			<Route path="#lists" component={MakeStates} exact />
-// 			<Button variant="primary" onClick={handleClick}>
-// 				Refresh
-// 			</Button>
-// 		</Navbar>
-// 	</Router>
-// </div>;

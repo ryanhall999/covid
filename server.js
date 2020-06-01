@@ -16,9 +16,14 @@ app.get("/", (req, res, next) => {
 });
 
 app.post("/api/global", (req, res, next) => {
-	console.log(req.body);
 	db.addGlobal(req.body)
 		.then((global) => res.send("global posted"))
+		.catch(next);
+});
+
+app.post("/api/us", (req, res, next) => {
+	db.addUs(req.body)
+		.then((us) => res.send("us posted"))
 		.catch(next);
 });
 

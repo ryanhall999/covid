@@ -51,7 +51,24 @@ const addGlobal = async (global) => {
 	).rows[0];
 };
 
+const addUs = async (us) => {
+	console.log(us);
+	const SQL =
+		"INSERT INTO us(newConfirmed, newDeaths, newRecovered, totalConfirmed, totalDeaths, totalRecovered) values($1, $2, $3, $4, $5, $6) returning *";
+	return (
+		await client.query(SQL, [
+			us.NewConfirmed,
+			us.NewDeaths,
+			us.NewRecovered,
+			us.TotalConfirmed,
+			us.TotalDeaths,
+			us.TotalRecovered,
+		])
+	).rows[0];
+};
+
 module.exports = {
 	sync,
 	addGlobal,
+	addUs,
 };

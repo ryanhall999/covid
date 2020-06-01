@@ -53,7 +53,10 @@ body {
 	background-color: #505357;
 	font-size: 1.5rem;
 	padding: 0.75rem;
+	font-weight: bold;
+	color: whitesmoke;
 }
 
-link {
+#pageLabel {
+	color: whitesmoke;
 }
