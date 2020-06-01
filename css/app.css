@@ -41,9 +41,9 @@ path:hover {
 	cursor: pointer;
 }
 
-body {
-	background-color: black;
-	color: white;
+div {
+	background-color: #6e7279c9;
+	color: whitesmoke;
 }
 
 #navbar {
@@ -59,4 +59,16 @@ body {
 
 #pageLabel {
 	color: whitesmoke;
+}
+
+body {
+	background-color: #6e7279c9;
+}
+
+Listgroup Item {
+	background-color: #6e7279c9;
+}
+
+Card {
+	background-color: #6e7279c9;
 }

@@ -9,6 +9,7 @@ import US from "./US";
 import Graphs from "./Graphs";
 import { Card, ListGroup, Button, Nav, Navbar } from "react-bootstrap";
 import { getStateInfo, getStatePop } from "./services";
+import IndvState from "./IndvState";
 
 function App() {
 	const [global, setGlobal] = useState({});
@@ -20,30 +21,29 @@ function App() {
 	const handleClick = async (e) => {
 		e.preventDefault();
 		await axios.get("https://api.covid19api.com/summary").then((response) => {
-			console.log(response);
-			if (response.status == "429") {
+			console.log(response.Global);
+			if (response.Global !== undefined) {
 				alert("Too Many Requests, Please Try Again");
 			} else {
 				setGlobal(response.data.Global);
 				setUs(response.data.Countries[177]);
 				axios.post("/api/global", response.data.Global).then((response) => {
-					console.log(response);
+					console.log(response.data);
 				});
 				axios.post("/api/us", response.data.Countries[177]).then((response) => {
-					console.log(response);
+					console.log(response.data);
 				});
 			}
 		});
 		await axios.get("https://covidtracking.com/api/states").then((response) => {
 			setStates(response.data);
 		});
-		// await axios
-		// 	.get("https://covidtracking.com/api/states/daily")ß
-		// 	.then((response) => {
-		// 		console.log(response);
-		// 		setDays(response.data);
-		// 	});
-		//
+		await axios
+			.get("https://covidtracking.com/api/states/daily")
+			.then((response) => {
+				console.log(response);
+				setDays(response.data);
+			});
 	};
 
 	const mapHandler = (e) => {
@@ -77,6 +77,7 @@ function App() {
 							<span id="pageLabel">Ryan's Covid Tracker</span>
 							<Link to="/">Home</Link>
 							<Link to="/list">States</Link>
+							<Link to="/state">Individual State</Link>
 							<Link to="/graphs">Graphs</Link>
 							<Button variant="primary" onClick={handleClick}>
 								Refresh
@@ -85,10 +86,17 @@ function App() {
 					</nav>
 					<Switch>
 						<Route path="/list">
-							<MakeStates states={states} />
+							<MakeStates states={states} us={us.TotalConfirmed} />
+						</Route>
+						<Route path="/state">
+							<IndvState states={states} us={us.TotalConfirmed} />
 						</Route>
 						<Route path="/graphs">
-							<Graphs states={states} />
+							<Graphs
+								states={states}
+								us={us.TotalConfirmed}
+								global={global.TotalConfirmed}
+							/>
 						</Route>
 						<Route path="/">
 							<div id="main">
