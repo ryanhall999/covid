@@ -20,11 +20,9 @@ function App() {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		await axios.get("https://api.covid19api.com/summary").then((response) => {
-			console.log(response.Global);
-			if (response.Global !== undefined) {
-				alert("Too Many Requests, Please Try Again");
-			} else {
+		await axios
+			.get("https://api.covid19api.com/summary")
+			.then((response) => {
 				setGlobal(response.data.Global);
 				setUs(response.data.Countries[177]);
 				axios.post("/api/global", response.data.Global).then((response) => {
@@ -33,8 +31,10 @@ function App() {
 				axios.post("/api/us", response.data.Countries[177]).then((response) => {
 					console.log(response.data);
 				});
-			}
-		});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 		await axios.get("https://covidtracking.com/api/states").then((response) => {
 			setStates(response.data);
 		});
@@ -45,6 +45,8 @@ function App() {
 				setDays(response.data);
 			});
 	};
+
+	console.log(days);
 
 	const mapHandler = (e) => {
 		if (states[0] !== undefined) {
@@ -89,7 +91,7 @@ function App() {
 							<MakeStates states={states} us={us.TotalConfirmed} />
 						</Route>
 						<Route path="/state">
-							<IndvState states={states} us={us.TotalConfirmed} />
+							<IndvState states={states} us={us.TotalConfirmed} days={days} />
 						</Route>
 						<Route path="/graphs">
 							<Graphs

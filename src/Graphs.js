@@ -6,6 +6,7 @@ export default function Graphs({ states, us, global }) {
 	if (states[0] !== undefined) {
 		let stateList = createStateLabels(states);
 		let data = createStateCases(states);
+
 		const stateFormatted = {
 			labels: stateList,
 			datasets: [
@@ -18,6 +19,7 @@ export default function Graphs({ states, us, global }) {
 				},
 			],
 		};
+
 		const usPerWorld = {
 			labels: ["World", "US"],
 			datasets: [
@@ -29,6 +31,7 @@ export default function Graphs({ states, us, global }) {
 				},
 			],
 		};
+
 		return (
 			<div>
 				<div>

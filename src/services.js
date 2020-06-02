@@ -80,7 +80,41 @@ function createStateCases(states) {
 	return newArr;
 }
 
+function createCaseDates(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		newArr.push(states[i].date);
+	}
+	return newArr;
+}
+
+function createDeathInfo(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		newArr.push(states[i].death);
+	}
+	return newArr;
+}
+
 function getStatePop(state) {
 	return pop[state];
 }
-export { getStateInfo, createStateLabels, createStateCases, getStatePop };
+
+function sortDays(days, state2) {
+	let newArr = [];
+	for (let i = 0; i < days.length; i++) {
+		if (days[i].state === state2) {
+			newArr.push(days[i]);
+		}
+	}
+	return newArr;
+}
+export {
+	getStateInfo,
+	createStateLabels,
+	createStateCases,
+	getStatePop,
+	sortDays,
+	createCaseDates,
+	createDeathInfo,
+};

@@ -14,14 +14,14 @@
 }
 
 #state {
-	border: 1px solid black;
+	border: 1px solid whitesmoke;
 	border-radius: 7px;
 	margin: 0.5rem;
 	padding: 0.5rem;
 }
 
 #topCard {
-	border: 1px solid black;
+	border: 1px solid whitesmoke;
 	border-radius: 7px;
 	margin: 0.5rem;
 	padding: 0.5rem;
@@ -71,4 +71,13 @@ Listgroup Item {
 
 Card {
 	background-color: #6e7279c9;
+}
+
+#stateDayPage {
+	width: 90%;
+}
+
+#listOuterBox {
+	display: flex;
+	flex-direction: row;
 }
