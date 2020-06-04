@@ -91,7 +91,9 @@ function createCaseDates(states) {
 function createDeathInfo(states) {
 	let newArr = [];
 	for (let i = 0; i < states.length; i++) {
-		newArr.push(states[i].death);
+		if (states[i].death !== null) {
+			newArr.push(states[i].death);
+		}
 	}
 	return newArr;
 }

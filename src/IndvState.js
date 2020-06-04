@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ListGroup, Card } from "react-bootstrap";
+import { ListGroup, Card, Dropdown } from "react-bootstrap";
 import {
 	createStateLabels,
 	sortDays,
@@ -30,20 +30,26 @@ export default function IndvState({ states, us, days }) {
 		setDeathDays(createDeathInfo(sortedDays));
 	}
 
-	const data = {
+	const caseData = {
 		labels: caseDates.reverse(),
 		datasets: [
 			{
-				label: "First dataset",
+				label: "Cases",
 				data: daysData.reverse(),
 				fill: true,
 				backgroundColor: "rgba(75,192,192,0.2)",
 				borderColor: "rgba(75,192,192,1)",
 			},
+		],
+	};
+
+	const deathData = {
+		labels: caseDates.reverse(),
+		datasets: [
 			{
-				label: "Second dataset",
+				label: "Deaths",
 				data: deathDays.reverse(),
-				fill: false,
+				fill: true,
 				borderColor: "#742774",
 			},
 		],
@@ -53,59 +59,72 @@ export default function IndvState({ states, us, days }) {
 
 	if (selected === "") {
 		return (
-			<div>
-				<ListGroup
-					as="ul"
-					style={{
-						backgroundColor: "#505357",
-					}}
-				>
+			<Dropdown>
+				<Dropdown.Toggle variant="success" id="dropdown-basic">
+					Select A State
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
 					{list.map((state) => {
 						return (
-							<ListGroup.Item
-								as="li"
-								style={{
-									backgroundColor: "#505357",
-								}}
+							<Dropdown.Item
 								onClick={(e) => {
 									setActive(e);
 								}}
 							>
 								{state}
-							</ListGroup.Item>
+							</Dropdown.Item>
 						);
 					})}
-				</ListGroup>
-			</div>
+				</Dropdown.Menu>
+			</Dropdown>
+			// <div>
+			// 	<ListGroup
+			// 		as="ul"
+			// 		style={{
+			// 			backgroundColor: "#505357",
+			// 		}}
+			// 	>
+			// 		{list.map((state) => {
+			// 			return (
+			// 				<ListGroup.Item
+			// 					as="li"
+			// 					style={{
+			// 						backgroundColor: "#505357",
+			// 					}}
+			// 					onClick={(e) => {
+			// 						setActive(e);
+			// 					}}
+			// 				>
+			// 					{state}
+			// 				</ListGroup.Item>
+			// 			);
+			// 		})}
+			// 	</ListGroup>
+			// </div>
 		);
 	} else {
 		return (
 			<div id="listOuterBox">
-				<ListGroup
-					as="ul"
-					style={{
-						backgroundColor: "#505357",
-					}}
-				>
-					{list.map((state) => {
-						return (
-							<ListGroup.Item
-								key={state}
-								as="li"
-								style={{
-									backgroundColor: "#505357",
-								}}
-								onClick={(e) => {
-									setActive(e);
-								}}
-							>
-								{state}
-							</ListGroup.Item>
-						);
-					})}
-				</ListGroup>
+				<Dropdown>
+					<Dropdown.Toggle variant="success" id="dropdown-basic">
+						Select A State
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{list.map((state) => {
+							return (
+								<Dropdown.Item
+									onClick={(e) => {
+										setActive(e);
+									}}
+								>
+									{state}
+								</Dropdown.Item>
+							);
+						})}
+					</Dropdown.Menu>
+				</Dropdown>
 				<div id="stateDayPage">
-					<Card style={{ backgroundColor: "#505357" }}>
+					<Card style={{ backgroundColor: "#505357", width: "100%" }}>
 						<Card.Header
 							style={{
 								fontWeight: "bold",
@@ -173,7 +192,7 @@ export default function IndvState({ states, us, days }) {
 						</ListGroup>
 					</Card>
 					<Line
-						data={data}
+						data={caseData}
 						options={{
 							title: {
 								display: true,
@@ -182,7 +201,20 @@ export default function IndvState({ states, us, days }) {
 								fontColor: "whitesmoke",
 							},
 							responsive: true,
-							maintainAspectRatio: false,
+							maintainAspectRatio: true,
+						}}
+					/>
+					<Line
+						data={deathData}
+						options={{
+							title: {
+								display: true,
+								text: `${selected.state} Deaths over Time`,
+								fontSize: 20,
+								fontColor: "whitesmoke",
+							},
+							responsive: true,
+							maintainAspectRatio: true,
 						}}
 					/>
 				</div>
