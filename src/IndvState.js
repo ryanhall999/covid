@@ -7,27 +7,42 @@ import {
 	createStateCases,
 	createCaseDates,
 	createDeathInfo,
+	createDeathDirv,
+	createCaseDirv,
+	getStatePop,
+	createNegDirv,
+	createStateNegs,
 } from "./services";
 import { Line } from "react-chartjs-2";
 
 export default function IndvState({ states, us, days }) {
 	const [selected, setSelected] = useState("");
 	const [stateDays, setStateDays] = useState([]);
+	const [statePop, setStatePop] = useState("");
 	const [daysData, setDaysData] = useState([]);
 	const [caseDates, setCaseDates] = useState([]);
 	const [deathDays, setDeathDays] = useState([]);
+	const [deathOverTime, setDeathOverTime] = useState([]);
+	const [caseOverTime, setCaseOverTime] = useState([]);
+	const [negs, setNegs] = useState([]);
+	const [negsOT, setNegsOT] = useState([]);
 
 	let list = createStateLabels(states);
 
 	function setActive(e) {
 		e.preventDefault();
-		console.log(e.target.textContent);
-		setSelected(getStateInfo(e.target.textContent, states));
-		let sortedDays = sortDays(days, e.target.textContent);
+		let targetState = e.target.textContent;
+		setStatePop(getStatePop(targetState));
+		setSelected(getStateInfo(targetState, states));
+		let sortedDays = sortDays(days, targetState);
 		setStateDays(sortedDays);
 		setDaysData(createStateCases(sortedDays));
 		setCaseDates(createCaseDates(sortedDays));
 		setDeathDays(createDeathInfo(sortedDays));
+		setDeathOverTime(createDeathDirv(sortedDays));
+		setCaseOverTime(createCaseDirv(sortedDays));
+		setNegs(createStateNegs(sortedDays));
+		setNegsOT(createNegDirv(sortedDays));
 	}
 
 	const caseData = {
@@ -35,27 +50,61 @@ export default function IndvState({ states, us, days }) {
 		datasets: [
 			{
 				label: "Cases",
+				yAxisID: "A",
 				data: daysData.reverse(),
 				fill: true,
 				backgroundColor: "rgba(75,192,192,0.2)",
 				borderColor: "rgba(75,192,192,1)",
 			},
-		],
-	};
-
-	const deathData = {
-		labels: caseDates.reverse(),
-		datasets: [
 			{
-				label: "Deaths",
-				data: deathDays.reverse(),
-				fill: true,
+				label: "Cases per Day",
+				yAxisID: "B",
+				data: caseOverTime.reverse(),
+				fill: false,
 				borderColor: "#742774",
 			},
 		],
 	};
 
-	console.log(deathDays);
+	const deathIncData = {
+		labels: caseDates.reverse(),
+		datasets: [
+			{
+				label: "Deaths",
+				yAxisID: "A",
+				data: deathDays.reverse(),
+				fill: true,
+				borderColor: "#742774",
+			},
+			{
+				label: "Deaths per Day",
+				yAxisID: "B",
+				data: deathOverTime.reverse(),
+				fill: false,
+				borderColor: "#742774",
+			},
+		],
+	};
+
+	const negIncData = {
+		labels: caseDates.reverse(),
+		datasets: [
+			{
+				label: "Negatives",
+				yAxisID: "A",
+				data: negs.reverse(),
+				fill: true,
+				borderColor: "#742774",
+			},
+			{
+				label: "Negatives per Day",
+				yAxisID: "B",
+				data: negsOT.reverse(),
+				fill: false,
+				borderColor: "#742774",
+			},
+		],
+	};
 
 	if (selected === "") {
 		return (
@@ -67,6 +116,7 @@ export default function IndvState({ states, us, days }) {
 					{list.map((state) => {
 						return (
 							<Dropdown.Item
+								key={state}
 								onClick={(e) => {
 									setActive(e);
 								}}
@@ -77,30 +127,6 @@ export default function IndvState({ states, us, days }) {
 					})}
 				</Dropdown.Menu>
 			</Dropdown>
-			// <div>
-			// 	<ListGroup
-			// 		as="ul"
-			// 		style={{
-			// 			backgroundColor: "#505357",
-			// 		}}
-			// 	>
-			// 		{list.map((state) => {
-			// 			return (
-			// 				<ListGroup.Item
-			// 					as="li"
-			// 					style={{
-			// 						backgroundColor: "#505357",
-			// 					}}
-			// 					onClick={(e) => {
-			// 						setActive(e);
-			// 					}}
-			// 				>
-			// 					{state}
-			// 				</ListGroup.Item>
-			// 			);
-			// 		})}
-			// 	</ListGroup>
-			// </div>
 		);
 	} else {
 		return (
@@ -113,6 +139,7 @@ export default function IndvState({ states, us, days }) {
 						{list.map((state) => {
 							return (
 								<Dropdown.Item
+									key={state}
 									onClick={(e) => {
 										setActive(e);
 									}}
@@ -143,22 +170,22 @@ export default function IndvState({ states, us, days }) {
 							>
 								{selected.state} Total Confirmed: {selected.positive}
 							</ListGroup.Item>{" "}
-							{/* <ListGroup.Item
+							<ListGroup.Item
 								style={{
 									backgroundColor: "#505357",
 								}}
 							>
 								{selected.state} % Total Confirmed of State Population:
 								{((selected.positive / statePop) * 100).toFixed(2)}%
-							</ListGroup.Item> */}
-							{/* <ListGroup.Item
+							</ListGroup.Item>
+							<ListGroup.Item
 								style={{
 									backgroundColor: "#505357",
 								}}
 							>
 								{selected.state} % Total Confirmed of US Cases:
 								{((selected.positive / us) * 100).toFixed(2)}%
-							</ListGroup.Item> */}
+							</ListGroup.Item>
 							<ListGroup.Item
 								style={{
 									backgroundColor: "#505357",
@@ -200,12 +227,47 @@ export default function IndvState({ states, us, days }) {
 								fontSize: 20,
 								fontColor: "whitesmoke",
 							},
+							legend: {
+								labels: {
+									fontColor: "whitesmoke",
+								},
+							},
 							responsive: true,
 							maintainAspectRatio: true,
+							scales: {
+								xAxes: [
+									{
+										gridLines: {
+											display: false,
+										},
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+								yAxes: [
+									{
+										id: "A",
+										type: "linear",
+										position: "left",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+									{
+										id: "B",
+										type: "linear",
+										position: "right",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+							},
 						}}
 					/>
 					<Line
-						data={deathData}
+						data={deathIncData}
 						options={{
 							title: {
 								display: true,
@@ -215,6 +277,89 @@ export default function IndvState({ states, us, days }) {
 							},
 							responsive: true,
 							maintainAspectRatio: true,
+							legend: {
+								labels: {
+									fontColor: "whitesmoke",
+								},
+							},
+							scales: {
+								xAxes: [
+									{
+										gridLines: {
+											display: false,
+										},
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+								yAxes: [
+									{
+										id: "A",
+										type: "linear",
+										position: "left",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+									{
+										id: "B",
+										type: "linear",
+										position: "right",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+							},
+						}}
+					/>
+					<Line
+						data={negIncData}
+						options={{
+							title: {
+								display: true,
+								text: `${selected.state} Negatives over Time`,
+								fontSize: 20,
+								fontColor: "whitesmoke",
+							},
+							responsive: true,
+							maintainAspectRatio: true,
+							legend: {
+								labels: {
+									fontColor: "whitesmoke",
+								},
+							},
+							scales: {
+								xAxes: [
+									{
+										gridLines: {
+											display: false,
+										},
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+								yAxes: [
+									{
+										id: "A",
+										type: "linear",
+										position: "left",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+									{
+										id: "B",
+										type: "linear",
+										position: "right",
+										ticks: {
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+							},
 						}}
 					/>
 				</div>

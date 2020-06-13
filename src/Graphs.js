@@ -1,21 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { createStateLabels, createStateCases } from "./services";
+import {
+	createStateLabels,
+	createStateCases,
+	greaterThan50,
+	lessThan50,
+} from "./services";
 import { Bar, Pie, Doughnut } from "react-chartjs-2";
 
 export default function Graphs({ states, us, global }) {
 	if (states[0] !== undefined) {
 		let stateList = createStateLabels(states);
-		let data = createStateCases(states);
+		let highList = greaterThan50(states);
+		let lowList = lessThan50(states);
+		let highStateList = createStateLabels(highList);
+		let highData = createStateCases(highList);
+		let lowStateList = createStateLabels(lowList);
+		let lowData = createStateCases(lowList);
 
-		const stateFormatted = {
-			labels: stateList,
+		const highStateFormatted = {
+			labels: highStateList,
 			datasets: [
 				{
 					label: "Covid19 Cases",
 					backgroundColor: "rgba(75,192,192,1)",
 					borderColor: "rgba(0,0,0,1)",
 					borderWidth: 1,
-					data: data,
+					data: highData,
+				},
+			],
+		};
+
+		const lowStateFormatted = {
+			labels: lowStateList,
+			datasets: [
+				{
+					label: "Covid19 Cases",
+					backgroundColor: "rgba(75,192,192,1)",
+					borderColor: "rgba(0,0,0,1)",
+					borderWidth: 1,
+					data: lowData,
 				},
 			],
 		};
@@ -37,11 +60,40 @@ export default function Graphs({ states, us, global }) {
 				<div>
 					<Bar
 						id="graph"
-						data={stateFormatted}
+						data={highStateFormatted}
 						options={{
 							title: {
 								display: true,
-								text: "Cases per State",
+								text: "Cases per State > 25k",
+								fontSize: 20,
+								fontColor: "whitesmoke",
+							},
+							legend: {
+								display: false,
+								position: "right",
+							},
+							responsive: true,
+							maintainAspectRatio: false,
+							scales: {
+								yAxes: [
+									{
+										ticks: {
+											beginAtZero: true,
+										},
+									},
+								],
+							},
+						}}
+					/>
+				</div>
+				<div>
+					<Bar
+						id="graph"
+						data={lowStateFormatted}
+						options={{
+							title: {
+								display: true,
+								text: "Cases per State < 25k",
 								fontSize: 20,
 								fontColor: "whitesmoke",
 							},

@@ -7,7 +7,7 @@ import USAMap from "react-usa-map";
 import Global from "./Global";
 import US from "./US";
 import Graphs from "./Graphs";
-import { Card, ListGroup, Button, Nav, Navbar } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { getStateInfo, getStatePop } from "./services";
 import IndvState from "./IndvState";
 

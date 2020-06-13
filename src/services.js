@@ -80,6 +80,14 @@ function createStateCases(states) {
 	return newArr;
 }
 
+function createStateNegs(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		newArr.push(states[i].negative);
+	}
+	return newArr;
+}
+
 function createCaseDates(states) {
 	let newArr = [];
 	for (let i = 0; i < states.length; i++) {
@@ -91,7 +99,9 @@ function createCaseDates(states) {
 function createDeathInfo(states) {
 	let newArr = [];
 	for (let i = 0; i < states.length; i++) {
-		if (states[i].death !== null) {
+		if (states[i].death === null) {
+			newArr.push(0);
+		} else {
 			newArr.push(states[i].death);
 		}
 	}
@@ -111,6 +121,57 @@ function sortDays(days, state2) {
 	}
 	return newArr;
 }
+
+function greaterThan50(stateList) {
+	let newArr = [];
+	stateList.forEach((state) => {
+		if (state.positive > 25000) {
+			newArr.push(state);
+		}
+	});
+	return newArr;
+}
+
+function lessThan50(stateList) {
+	let newArr = [];
+	stateList.forEach((state) => {
+		if (state.positive <= 25000) {
+			newArr.push(state);
+		}
+	});
+	return newArr;
+}
+
+function createDeathDirv(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		if (states[i].deathIncrease !== null) {
+			newArr.push(states[i].deathIncrease);
+		}
+	}
+	return newArr;
+}
+
+function createCaseDirv(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		if (states[i].positiveIncrease !== null) {
+			newArr.push(states[i].positiveIncrease);
+		}
+	}
+	return newArr;
+}
+
+function createNegDirv(states) {
+	let newArr = [];
+	for (let i = 0; i < states.length; i++) {
+		if (states[i].deathIncrease !== null) {
+			newArr.push(states[i].negativeIncrease);
+		}
+	}
+	return newArr;
+}
+
 export {
 	getStateInfo,
 	createStateLabels,
@@ -119,4 +180,10 @@ export {
 	sortDays,
 	createCaseDates,
 	createDeathInfo,
+	greaterThan50,
+	lessThan50,
+	createDeathDirv,
+	createCaseDirv,
+	createNegDirv,
+	createStateNegs,
 };
