@@ -13,7 +13,7 @@ import {
 	createNegDirv,
 	createStateNegs,
 } from "./services";
-import { Line } from "react-chartjs-2";
+import { Line, Pie } from "react-chartjs-2";
 
 export default function IndvState({ states, us, days }) {
 	const [selected, setSelected] = useState("");
@@ -102,6 +102,36 @@ export default function IndvState({ states, us, days }) {
 				data: negsOT.reverse(),
 				fill: false,
 				borderColor: "#742774",
+			},
+		],
+	};
+
+	console.log(selected);
+
+	const statePie = {
+		labels: ["Positive", "Negative", "Dead"],
+		datasets: [
+			{
+				label: "Cases",
+				backgroundColor: ["#2FDE00", "#00A6B4", "#6800B4"],
+				hoverBackgroundColor: ["#175000", "#003350", "#35014F"],
+				data: [
+					selected.positive - selected.death,
+					selected.negative,
+					selected.death,
+				],
+			},
+		],
+	};
+
+	const totStatePie = {
+		labels: ["Tested", "Not Tested"],
+		datasets: [
+			{
+				label: "Cases",
+				backgroundColor: ["#2FDE00", "#00A6B4"],
+				hoverBackgroundColor: ["#175000", "#003350"],
+				data: [selected.total, statePop - selected.total],
 			},
 		],
 	};
@@ -360,6 +390,40 @@ export default function IndvState({ states, us, days }) {
 									},
 								],
 							},
+						}}
+					/>
+					<Pie
+						data={statePie}
+						options={{
+							title: {
+								display: true,
+								text: "State Case Breakdown",
+								fontSize: 20,
+								fontColor: "whitesmoke",
+							},
+							legend: {
+								display: false,
+								position: "right",
+							},
+							responsive: true,
+							maintainAspectRatio: true,
+						}}
+					/>
+					<Pie
+						data={totStatePie}
+						options={{
+							title: {
+								display: true,
+								text: "Tested of State Pop",
+								fontSize: 20,
+								fontColor: "whitesmoke",
+							},
+							legend: {
+								display: false,
+								position: "right",
+							},
+							responsive: true,
+							maintainAspectRatio: true,
 						}}
 					/>
 				</div>

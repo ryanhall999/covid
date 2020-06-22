@@ -46,8 +46,6 @@ function App() {
 			});
 	};
 
-	console.log(days);
-
 	const mapHandler = (e) => {
 		if (states[0] !== undefined) {
 			let state = getStateInfo(e.target.dataset.name, states);
