@@ -109,29 +109,18 @@ export default function IndvState({ states, us, days }) {
 	console.log(selected);
 
 	const statePie = {
-		labels: ["Positive", "Negative", "Dead"],
+		labels: ["Untested", "Negative", "Positive", "Dead"],
 		datasets: [
 			{
 				label: "Cases",
-				backgroundColor: ["#2FDE00", "#00A6B4", "#6800B4"],
-				hoverBackgroundColor: ["#175000", "#003350", "#35014F"],
+				backgroundColor: ["#2FDE00", "#00A6B4", "#6800B4", "#f59a13"],
+				hoverBackgroundColor: ["#175000", "#003350", "#35014F", "#8f5113"],
 				data: [
-					selected.positive - selected.death,
+					statePop - selected.total,
 					selected.negative,
+					selected.positive - selected.death,
 					selected.death,
 				],
-			},
-		],
-	};
-
-	const totStatePie = {
-		labels: ["Tested", "Not Tested"],
-		datasets: [
-			{
-				label: "Cases",
-				backgroundColor: ["#2FDE00", "#00A6B4"],
-				hoverBackgroundColor: ["#175000", "#003350"],
-				data: [selected.total, statePop - selected.total],
 			},
 		],
 	};
@@ -146,6 +135,7 @@ export default function IndvState({ states, us, days }) {
 					{list.map((state) => {
 						return (
 							<Dropdown.Item
+								id="bkGrnd"
 								key={state}
 								onClick={(e) => {
 									setActive(e);
@@ -165,10 +155,11 @@ export default function IndvState({ states, us, days }) {
 					<Dropdown.Toggle variant="success" id="dropdown-basic">
 						Select A State
 					</Dropdown.Toggle>
-					<Dropdown.Menu>
+					<Dropdown.Menu id="bkGrnd">
 						{list.map((state) => {
 							return (
 								<Dropdown.Item
+									id="bkGrnd"
 									key={state}
 									onClick={(e) => {
 										setActive(e);
@@ -182,67 +173,30 @@ export default function IndvState({ states, us, days }) {
 				</Dropdown>
 				<div id="stateDayPage">
 					<Card style={{ backgroundColor: "#505357", width: "100%" }}>
-						<Card.Header
-							style={{
-								fontWeight: "bold",
-								fontSize: "2rem",
-								alignSelf: "center",
-								backgroundColor: "#505357",
-							}}
-						>
-							{selected.state}
-						</Card.Header>
+						<Card.Header id="topStat">{selected.state}</Card.Header>
 						<ListGroup variant="flush">
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} Total Confirmed: {selected.positive}
 							</ListGroup.Item>{" "}
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} % Total Confirmed of State Population:
 								{((selected.positive / statePop) * 100).toFixed(2)}%
 							</ListGroup.Item>
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} % Total Confirmed of US Cases:
 								{((selected.positive / us) * 100).toFixed(2)}%
 							</ListGroup.Item>
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} Total Deaths: {selected.death}
 							</ListGroup.Item>
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} Total Recovered: {selected.recovered}
 							</ListGroup.Item>
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} Death per Confirmed:
 								{((selected.death / selected.positive) * 100).toFixed(2)}%
 							</ListGroup.Item>
-							<ListGroup.Item
-								style={{
-									backgroundColor: "#505357",
-								}}
-							>
+							<ListGroup.Item id="bkGrnd">
 								{selected.state} Recovered per Confirmed:
 								{((selected.recovered / selected.positive) * 100).toFixed(2)}%
 							</ListGroup.Item>
@@ -264,6 +218,8 @@ export default function IndvState({ states, us, days }) {
 							},
 							responsive: true,
 							maintainAspectRatio: true,
+							responsiveAnimationDuration: 2500,
+
 							scales: {
 								xAxes: [
 									{
@@ -397,30 +353,15 @@ export default function IndvState({ states, us, days }) {
 						options={{
 							title: {
 								display: true,
-								text: "State Case Breakdown",
-								fontSize: 20,
+								text: `${selected.state} Case Breakdown`,
 								fontColor: "whitesmoke",
 							},
 							legend: {
-								display: false,
-								position: "right",
-							},
-							responsive: true,
-							maintainAspectRatio: true,
-						}}
-					/>
-					<Pie
-						data={totStatePie}
-						options={{
-							title: {
 								display: true,
-								text: "Tested of State Pop",
-								fontSize: 20,
-								fontColor: "whitesmoke",
-							},
-							legend: {
-								display: false,
 								position: "right",
+								labels: {
+									fontColor: "whitesmoke",
+								},
 							},
 							responsive: true,
 							maintainAspectRatio: true,

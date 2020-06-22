@@ -71,6 +71,7 @@ export default function Graphs({ states, us, global }) {
 							legend: {
 								display: false,
 								position: "right",
+								fontColor: "whitesmoke",
 							},
 							responsive: true,
 							maintainAspectRatio: false,
@@ -79,6 +80,14 @@ export default function Graphs({ states, us, global }) {
 									{
 										ticks: {
 											beginAtZero: true,
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+								xAxes: [
+									{
+										ticks: {
+											fontColor: "whitesmoke",
 										},
 									},
 								],
@@ -108,6 +117,14 @@ export default function Graphs({ states, us, global }) {
 									{
 										ticks: {
 											beginAtZero: true,
+											fontColor: "whitesmoke",
+										},
+									},
+								],
+								xAxes: [
+									{
+										ticks: {
+											fontColor: "whitesmoke",
 										},
 									},
 								],

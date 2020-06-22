@@ -11,67 +11,30 @@ export default function MakeStates({ states, us }) {
 					return (
 						<div key={state.state} id="state">
 							<Card style={{ width: "20rem", backgroundColor: "#505357" }}>
-								<Card.Header
-									style={{
-										fontWeight: "bold",
-										fontSize: "2rem",
-										alignSelf: "center",
-										backgroundColor: "#505357",
-									}}
-								>
-									{state.state}
-								</Card.Header>
+								<Card.Header id="topStat">{state.state}</Card.Header>
 								<ListGroup variant="flush">
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} Total Confirmed: {state.positive}
 									</ListGroup.Item>{" "}
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} % Total Confirmed of State Population:
 										{((state.positive / statePop) * 100).toFixed(2)}%
 									</ListGroup.Item>
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} % Total Confirmed of US Cases:
 										{((state.positive / us) * 100).toFixed(2)}%
 									</ListGroup.Item>
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} Total Deaths: {state.death}
 									</ListGroup.Item>
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} Total Recovered: {state.recovered}
 									</ListGroup.Item>
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} Death per Confirmed:
 										{((state.death / state.positive) * 100).toFixed(2)}%
 									</ListGroup.Item>
-									<ListGroup.Item
-										style={{
-											backgroundColor: "#505357",
-										}}
-									>
+									<ListGroup.Item id="bkGrnd">
 										{state.state} Recovered per Confirmed:
 										{((state.recovered / state.positive) * 100).toFixed(2)}%
 									</ListGroup.Item>
