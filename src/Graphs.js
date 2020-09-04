@@ -64,7 +64,7 @@ export default function Graphs({ states, us, global }) {
 						options={{
 							title: {
 								display: true,
-								text: "Cases per State > 25k",
+								text: "Cases per State > 100k",
 								fontSize: 20,
 								fontColor: "whitesmoke",
 							},
@@ -100,7 +100,7 @@ export default function Graphs({ states, us, global }) {
 						options={{
 							title: {
 								display: true,
-								text: "Cases per State < 25k",
+								text: "Cases per State < 100k",
 								fontSize: 20,
 								fontColor: "whitesmoke",
 							},

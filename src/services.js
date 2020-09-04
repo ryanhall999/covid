@@ -125,7 +125,7 @@ function sortDays(days, state2) {
 function greaterThan50(stateList) {
 	let newArr = [];
 	stateList.forEach((state) => {
-		if (state.positive > 25000) {
+		if (state.positive > 100000) {
 			newArr.push(state);
 		}
 	});
@@ -135,7 +135,7 @@ function greaterThan50(stateList) {
 function lessThan50(stateList) {
 	let newArr = [];
 	stateList.forEach((state) => {
-		if (state.positive <= 25000) {
+		if (state.positive <= 100000) {
 			newArr.push(state);
 		}
 	});
@@ -172,6 +172,18 @@ function createNegDirv(states) {
 	return newArr;
 }
 
+function sortConf(states) {
+	return states.sort((a, b) => {
+		return b.positive - a.positive;
+	});
+}
+
+function sortDead(states) {
+	return states.sort((a, b) => {
+		return b.death - a.death;
+	});
+}
+
 export {
 	getStateInfo,
 	createStateLabels,
@@ -186,4 +198,6 @@ export {
 	createCaseDirv,
 	createNegDirv,
 	createStateNegs,
+	sortConf,
+	sortDead,
 };
