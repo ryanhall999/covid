@@ -16,10 +16,10 @@ export default function MakeStates({ states, us }) {
 			console.log("Total Confirmed");
 			setStates2(sortConf(states));
 			console.log(states2);
-		} else if (select === "Total Dead") {
-			console.log("Total Dead");
-			setStates2(sortDead(states));
-			console.log(states2);
+			// } else if (select === "Total Dead") {
+			// 	console.log("Total Dead");
+			// 	setStates2(sortDead(states));
+			// 	console.log(states2);
 		}
 	};
 
