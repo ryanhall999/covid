@@ -3,25 +3,25 @@ import { Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap";
 import { getStatePop, pop, sortConf, sortDead } from "./services";
 
 export default function MakeStates({ states, us }) {
-	const [states2, setStates2] = useState(states);
+	// const [states2, setStates2] = useState(states);
 
-	const setActive = (e) => {
-		e.preventDefault();
-		let select = e.target.text;
-		if (select === "Alphabetically") {
-			console.log("Alphabetically");
-			setStates2(states);
-			console.log(states2);
-		} else if (select === "Total Confirmed") {
-			console.log("Total Confirmed");
-			setStates2(sortConf(states));
-			console.log(states2);
-		} else if (select === "Total Dead") {
-			console.log("Total Dead");
-			setStates2(sortDead(states));
-			console.log(states2);
-		}
-	};
+	// const setActive = (e) => {
+	// 	e.preventDefault();
+	// 	let select = e.target.text;
+	// 	if (select === "Alphabetically") {
+	// 		console.log("Alphabetically");
+	// 		setStates2(states);
+	// 		console.log(states2);
+	// 	} else if (select === "Total Confirmed") {
+	// 		console.log("Total Confirmed");
+	// 		setStates2(sortConf(states));
+	// 		console.log(states2);
+	// 	} else if (select === "Total Dead") {
+	// 		console.log("Total Dead");
+	// 		setStates2(sortDead(states));
+	// 		console.log(states2);
+	// 	}
+	// };
 
 	if (states2[0] !== undefined) {
 		return (
