@@ -3,7 +3,7 @@ import { Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap";
 import { getStatePop, pop, sortConf, sortDead } from "./services";
 
 export default function MakeStates({ states, us }) {
-	// const [states2, setStates2] = useState(states);
+	const [states2, setStates2] = useState(states);
 
 	// const setActive = (e) => {
 	// 	e.preventDefault();
