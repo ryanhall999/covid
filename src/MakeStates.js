@@ -7,7 +7,7 @@ export default function MakeStates({ states, us }) {
 
 	const setActive = (e) => {
 		e.preventDefault();
-		// let select = e.target.text;
+		let select = e.target.text;
 		// if (select === "Alphabetically") {
 		// 	console.log("Alphabetically");
 		// 	setStates2(states);
