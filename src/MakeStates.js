@@ -10,8 +10,8 @@ export default function MakeStates({ states, us }) {
 		let select = e.target.text;
 		if (select === "Alphabetically") {
 			console.log("Alphabetically");
-			// 	setStates2(states);
-			// 	console.log(states2);
+			setStates2(states);
+			console.log(states2);
 			// } else if (select === "Total Confirmed") {
 			// 	console.log("Total Confirmed");
 			// 	setStates2(sortConf(states));
