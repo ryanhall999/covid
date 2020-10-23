@@ -57,9 +57,9 @@ export default function Graphs({ states, us, global }) {
 
 		return (
 			<div>
-				<div>
+				<div id="barGraphs">
 					<Bar
-						id="graph"
+						id="graphSide"
 						data={highStateFormatted}
 						options={{
 							title: {
@@ -74,7 +74,7 @@ export default function Graphs({ states, us, global }) {
 								fontColor: "whitesmoke",
 							},
 							responsive: true,
-							maintainAspectRatio: false,
+							maintainAspectRatio: true,
 							scales: {
 								yAxes: [
 									{
@@ -94,10 +94,8 @@ export default function Graphs({ states, us, global }) {
 							},
 						}}
 					/>
-				</div>
-				<div>
 					<Bar
-						id="graph"
+						id="graphSide"
 						data={lowStateFormatted}
 						options={{
 							title: {
@@ -111,7 +109,7 @@ export default function Graphs({ states, us, global }) {
 								position: "right",
 							},
 							responsive: true,
-							maintainAspectRatio: false,
+							maintainAspectRatio: true,
 							scales: {
 								yAxes: [
 									{
@@ -132,25 +130,23 @@ export default function Graphs({ states, us, global }) {
 						}}
 					/>
 				</div>
-				<div>
-					<Pie
-						data={usPerWorld}
-						options={{
-							title: {
-								display: true,
-								text: "US Cases of Worldwide Total:",
-								fontSize: 20,
-								fontColor: "whitesmoke",
-							},
-							legend: {
-								display: false,
-								position: "right",
-							},
-							responsive: true,
-							maintainAspectRatio: false,
-						}}
-					/>
-				</div>
+				<Pie
+					data={usPerWorld}
+					options={{
+						title: {
+							display: true,
+							text: "US Cases of Worldwide Total:",
+							fontSize: 20,
+							fontColor: "whitesmoke",
+						},
+						legend: {
+							display: false,
+							position: "right",
+						},
+						responsive: true,
+						maintainAspectRatio: true,
+					}}
+				/>
 			</div>
 		);
 	} else {

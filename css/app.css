@@ -65,14 +65,6 @@ body {
 	background-color: #6e7279c9;
 }
 
-Listgroup Item {
-	background-color: #6e7279c9;
-}
-
-Card {
-	background-color: #6e7279c9;
-}
-
 #stateDayPage {
 	width: 100%;
 }
@@ -98,4 +90,15 @@ Card {
 	width: 25rem !important;
 	margin: 0.5rem !important;
 	background-color: #505357 !important;
+}
+
+#barGraph {
+	display: flex;
+	flex-direction: row;
+	align-content: space-around;
+}
+
+#graphSide {
+	width: 48% !important;
+	height: auto !important;
 }

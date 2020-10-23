@@ -29,6 +29,8 @@ export default function IndvState({ states, us, days }) {
 
 	let list = createStateLabels(states);
 
+	console.log(states, us, days);
+
 	function setActive(e) {
 		e.preventDefault();
 		let targetState = e.target.textContent;
@@ -109,16 +111,42 @@ export default function IndvState({ states, us, days }) {
 	console.log(selected);
 
 	const statePie = {
-		labels: ["Untested", "Negative", "Positive", "Dead"],
+		labels: [
+			"Untested",
+			"Negative",
+			"Positive",
+			"Hospitalized",
+			"Recovered",
+			"Dead",
+		],
 		datasets: [
 			{
 				label: "Cases",
-				backgroundColor: ["#2FDE00", "#00A6B4", "#6800B4", "#f59a13"],
-				hoverBackgroundColor: ["#175000", "#003350", "#35014F", "#8f5113"],
+				backgroundColor: [
+					"#2FDE00",
+					"#00A6B4",
+					"#6800B4",
+					"#f59a13",
+					"#f51313",
+					"#4e5254",
+				],
+				hoverBackgroundColor: [
+					"#175000",
+					"#003350",
+					"#35014F",
+					"#8f5113",
+					"#a11313",
+					"#2e3031",
+				],
 				data: [
 					statePop - selected.total,
 					selected.negative,
-					selected.positive - selected.death,
+					selected.positive -
+						selected.hospitalizedCurrently -
+						selected.death -
+						selected.recovered,
+					selected.hospitalizedCurrently - selected.death - selected.recovered,
+					selected.recovered,
 					selected.death,
 				],
 			},

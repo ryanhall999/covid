@@ -24,24 +24,25 @@ function App() {
 			.get("https://api.covid19api.com/summary")
 			.then((response) => {
 				setGlobal(response.data.Global);
-				setUs(response.data.Countries[177]);
+				setUs(response.data.Countries[180]);
 				axios.post("/api/global", response.data.Global).then((response) => {
 					console.log(response.data);
 				});
-				axios.post("/api/us", response.data.Countries[177]).then((response) => {
+				axios.post("/api/us", response.data.Countries[180]).then((response) => {
 					console.log(response.data);
 				});
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-		await axios.get("https://covidtracking.com/api/states").then((response) => {
-			setStates(response.data);
-		});
 		await axios
-			.get("https://covidtracking.com/api/states/daily")
+			.get("https://api.covidtracking.com/v1/states/current.json")
 			.then((response) => {
-				console.log(response);
+				setStates(response.data);
+			});
+		await axios
+			.get("https://api.covidtracking.com/v1/states/daily.json")
+			.then((response) => {
 				setDays(response.data);
 			});
 	};
@@ -94,6 +95,8 @@ function App() {
 			alert(e.target.dataset.name);
 		}
 	};
+
+	console.log(states, days);
 
 	// setInterval(liveRefresh, 21600000);
 
